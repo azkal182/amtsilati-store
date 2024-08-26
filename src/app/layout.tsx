@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from "./providers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./globals.css";
+import { SidebarMenu } from "@/components/layout/sidebar";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +21,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="light">
+      <body className={inter.className}>
+        <Providers>
+          <div
+            className={cn(
+              "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1  mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+              "h-screen" // for your use case, use `h-screen` instead of `h-[60vh]`
+            )}
+          >
+            <SidebarMenu />
+            {children}
+          </div>
+        </Providers>
+        <ToastContainer position="top-right" autoClose={5000} />
+      </body>
     </html>
   );
 }
